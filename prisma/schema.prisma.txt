@@ -1,0 +1,54 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma"
+}
+
+model User {
+  id        String    [@id](/users/id)  [@default](/users/default)(cuid())
+  email     String    [@unique](/users/unique)
+  name      String
+  password  String
+  role      Role      [@default](/users/default)(STUDENT)
+  createdAt DateTime  [@default](/users/default)(now())
+  updatedAt DateTime  [@updatedAt](/users/updatedAt)
+  scores    Score[]
+}
+
+model Quest {
+  id          String        [@id](/users/id)  [@default](/users/default)(cuid())
+  title       String
+  category    QuestCategory
+  difficulty  Int
+  content     Json
+  createdAt   DateTime      [@default](/users/default)(now())
+  updatedAt   DateTime      [@updatedAt](/users/updatedAt)
+  scores      Score[]
+}
+
+model Score {
+  id        String    [@id](/users/id)  [@default](/users/default)(cuid())
+  score     Int
+  userId    String
+  questId   String
+  createdAt DateTime  [@default](/users/default)(now())
+  user      User      [@relation](/users/relation)(fields: [userId], references: [id])
+  quest     Quest     [@relation](/users/relation)(fields: [questId], references: [id])
+}
+
+enum Role {
+  TEACHER
+  STUDENT
+}
+
+enum QuestCategory {
+  FOLD_CUBE
+  INSTRUMENT_READING
+  MEMORY_SHAPES
+  MEMORY_NUMBERS
+  FIGURE_COMPARISON
+  PATTERN_RECOGNITION
+}
