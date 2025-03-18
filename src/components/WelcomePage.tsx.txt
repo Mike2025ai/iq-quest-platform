@@ -1,0 +1,30 @@
+'use client'
+
+import { useState } from 'react'
+import { LoginForm } from './auth/LoginForm'
+import { RegisterForm } from './auth/RegisterForm'
+
+export function WelcomePage() {
+  const [showLogin, setShowLogin] = useState<boolean>(true)
+
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center bg-white p-4">
+      <div className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-lg">
+        <h1 className="mb-6 text-center text-3xl font-bold text-black">IQ Quest Platform</h1>
+        
+        <div className="mb-6 flex justify-center space-x-4">
+          <button
+            onClick={() => setShowLogin(true)}
+            className={`rounded-md px-4 py-2 ${
+              showLogin ? 'bg-blue-500 text-white' : 'bg-gray-100 text-black'
+            }`}
+          >
+            {'Login'}
+          </button>
+          <button
+            onClick={() => setShowLogin(false)}
+            className={`rounded-md px-4 py-2 ${
+              !showLogin ? 'bg-blue-500 text-white' : 'bg-gray-100 text-black'
+            }`}
+          >
+            {'Register'}
